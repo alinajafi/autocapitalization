@@ -1,0 +1,8 @@
+{
+    "name": "Autocapitalization settings",
+    "description": "Adds autocapitalization settings to text input",
+    "category": "others",
+    "infos": {
+        "maintainer": "AliNa"
+    }
+}
