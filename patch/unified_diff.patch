@@ -1,0 +1,64 @@
+diff -Nru jolla/usr/share/jolla-settings/pages/text_input/textinput.qml alina/usr/share/jolla-settings/pages/text_input/textinput.qml
+--- jolla/usr/share/jolla-settings/pages/text_input/textinput.qml	2015-12-04 18:20:11.839559847 +0330
++++ alina/usr/share/jolla-settings/pages/text_input/textinput.qml	2015-12-06 00:32:06.917434638 +0330
+@@ -277,6 +277,14 @@
+                 onClicked: splitConfig.value = !splitConfig.value
+             }
+ 
++            TextSwitch {
++                width: parent.width
++                checked: autocapitalization.enabled
++                //% Allow auto-capitalization for all layouts
++                text: qsTrId("sailfishos-patch-autocaps-la-autocaps")
++                onClicked: autocapitalization.enabled = checked
++            }
++
+             Item {
+                 width: 1
+                 height: Theme.paddingLarge
+@@ -366,6 +374,8 @@
+                 }
+             }
+         }
++
++        VerticalScrollDecorator {}
+     }
+ 
+     ConfigurationValue {
+@@ -393,6 +403,13 @@
+         defaultValue: false
+     }
+ 
++    ConfigurationGroup {
++        id: autocapitalization
++        path: "/apps/text_input/autocaps"
++
++        property bool enabled: true
++    }
++
+     ConfigurationValue {
+         id: currentPhysicalLayoutConfig
+         key: "/desktop/lipstick-jolla-home/layout"
+diff -Nru jolla/usr/share/maliit/plugins/com/jolla/KeyboardBase.qml alina/usr/share/maliit/plugins/com/jolla/KeyboardBase.qml
+--- jolla/usr/share/maliit/plugins/com/jolla/KeyboardBase.qml	2015-12-04 18:20:11.183559829 +0330
++++ alina/usr/share/maliit/plugins/com/jolla/KeyboardBase.qml	2015-12-04 17:57:42.543522598 +0330
+@@ -376,11 +376,19 @@
+         deadKeyAccent = ""
+     }
+ 
++    ConfigurationGroup {
++        id: autocapitalization
++        path: "/apps/text_input/autocaps"
++
++        property bool enabled: true
++    }
++
+     function applyAutocaps() {
+         if (MInputMethodQuick.surroundingTextValid
+                 && MInputMethodQuick.contentType === Maliit.FreeTextContentType
+                 && MInputMethodQuick.autoCapitalizationEnabled
+                 && !MInputMethodQuick.hiddenText
++                && autocapitalization.enabled
+                 && layout && layout.type === "") {
+             var position = MInputMethodQuick.cursorPosition
+             var text = MInputMethodQuick.surroundingText.substring(0, position)
