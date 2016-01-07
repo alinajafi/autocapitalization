@@ -1,0 +1,12 @@
+{
+    "translation_catalog": "sailfishos-patch-autocaps",
+    "entries": [
+    {
+        "path": "system_settings/system/text_input",
+        "type": "custom",
+        "params": {
+            "source": "/usr/share/jolla-settings/pages/text_input/textinput.qml"
+        }
+    }
+    ]
+}
